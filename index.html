@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mtc-memleak</title>
+  </head>
+  <body></body>
+  <script>
+    setInterval(() => {
+      document.body.innerHTML = '';
+      insertData();
+    }, 300);
+
+    function insertData() {
+      for (let i = 0; i < 10; i++) {
+        document.body.innerHTML += `
+          <table style="margin-bottom: 50px">
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Age</th>
+            </tr>
+            ${makeData().reduce((acc, item) => {
+              acc += `
+              <tr>
+                <td>${item.firstName}</td>
+                <td>${item.lastName}</td>
+                <td>${item.age}</td>
+              </tr>
+              `;
+              return acc;
+            }, "")}
+          </table>
+        `;
+      }
+    }
+
+    function makeData() {
+      const runtime = Math.floor(Math.random() * 100);
+      const datas = [];
+      for (let i = 0; i < runtime; i++) {
+        datas.push({
+          firstName: makeFirstName(),
+          lastName: makeLastName(),
+          age: makeAge(),
+        });
+      }
+      return datas;
+    }
+
+    function makeFirstName() {
+      const names = ["Oliver", "Elijah", "William", "James", "Benjamin", "Lucas", "Henry", "Alexander", "Mason", "Michael", "Ethan", "Daniel"];
+      return names[Math.floor(Math.random() * names.length)];
+    }
+
+    function makeLastName() {
+      const lastnames = [
+        "Smith",
+        "Johnson",
+        "Williams",
+        "Brown",
+        "Jones",
+        "Miller",
+        "Davis",
+        "Garcia",
+        "Rodriguez",
+        "Wilson",
+        "Martinez",
+        "Anderson",
+        "Taylor",
+        "Thomas",
+        "Hernandez",
+        "Moore",
+        "Martin",
+        "Jackson",
+        "Thompson",
+        "White",
+        "Lopez",
+        "Lee",
+        "Gonzalez",
+        "Harris",
+        "Clark",
+        "Lewis",
+        "Robinson",
+        "Walker",
+        "Perez",
+        "Hall",
+        "Young",
+        "Allen",
+        "Sanchez",
+        "Wright",
+      ];
+      return lastnames[Math.floor(Math.random() * lastnames.length)];
+    }
+
+    function makeAge() {
+      return Math.floor(Math.random() * 99);
+    }
+  </script>
+</html>
